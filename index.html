@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#52734d">
+  <meta name="description" content="APT is a fully automated framework for feedback-driven, agentic post-training of text-to-image models. Explore the method, benchmark results, and visual comparisons.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="APT: Feedback-Driven Agentic Post-Training for Text-to-Image Generation">
+  <meta property="og:description" content="Let the model’s feedback shape what it learns next. A fully automated, adaptive post-training framework for text-to-image generation.">
+  <meta property="og:image" content="assets/social-preview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>APT — Agentic Post-Training for Text-to-Image Generation</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=apt">
+  <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="site-config.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+      <symbol id="icon-diagonal" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
+      <symbol id="icon-paper" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8Zm0 0v5h5M9 13h6m-6 4h6"/></symbol>
+      <!-- GitHub and arXiv logos from Simple Icons 15.10.0, CC0-1.0. -->
+      <symbol id="icon-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+      <symbol id="icon-arxiv" viewBox="0 0 24 24"><path d="M3.8423 0a1.0037 1.0037 0 0 0-.922.6078c-.1536.3687-.0438.6275.2938 1.1113l6.9185 8.3597-1.0223 1.1058a1.0393 1.0393 0 0 0 .003 1.4229l1.2292 1.3135-5.4391 6.4444c-.2803.299-.4538.823-.2971 1.1986a1.0253 1.0253 0 0 0 .9585.635.9133.9133 0 0 0 .6891-.3405l5.783-6.126 7.4902 8.0051a.8527.8527 0 0 0 .6835.2597.9575.9575 0 0 0 .8777-.6138c.1577-.377-.017-.7502-.306-1.1407l-7.0518-8.3418 1.0632-1.13a.9626.9626 0 0 0 .0089-1.3165L4.6336.4639s-.3733-.4535-.768-.463zm0 .272h.0166c.2179.0052.4874.2715.5644.3639l.005.006.0052.0055 10.169 10.9905a.6915.6915 0 0 1-.0072.945l-1.0666 1.133-1.4982-1.7724-8.5994-10.39c-.3286-.472-.352-.6183-.2592-.841a.7307.7307 0 0 1 .6704-.4401Zm14.341 1.5701a.877.877 0 0 0-.6554.2418l-5.6962 6.1584 1.6944 1.8319 5.3089-6.5138c.3251-.4335.479-.6603.3247-1.0292a1.1205 1.1205 0 0 0-.9763-.689zm-7.6557 12.2823 1.3186 1.4135-5.7864 6.1295a.6494.6494 0 0 1-.4959.26.7516.7516 0 0 1-.706-.4669c-.1119-.2682.0359-.6864.2442-.9083l.0051-.0055.0047-.0055z"/></symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M8 16v-5m5 5V7m5 9V4"/></symbol>
+      <symbol id="icon-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+      <symbol id="icon-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+      <symbol id="icon-loop" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.1 8a8 8 0 0 1 13.2-3.1L20 7M4 17l1.7 2.1A8 8 0 0 0 18.9 16"/></symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+      <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="#" aria-label="APT home"><span class="brand-wordmark">APT</span><span class="brand-context"></span></a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#ablations">Ablations</a><a href="#gallery">Gallery</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero container" aria-labelledby="paper-title">
+      <h1 id="paper-title"><span><span class="accent">APT:</span> Feedback-Driven</span><em>Agentic Post-Training</em><span class="title-last">for Text-to-Image Generation</span></h1>
+      <p class="hero-description">Let the model’s feedback shape what it learns next.</p>
+      <div class="authors" aria-label="Authors">
+        <span><a href="mailto:zsr200901@mail.ustc.edu.cn">Sirui Zhang</a><sup>1,2*</sup></span>
+        <span>Fangyun Wei<sup>2</sup></span><span>Dong Chen<sup>2</sup></span><span>Jinjing Zhao<sup>3</sup></span><span>Yitong Wang<sup>4</sup></span>
+        <span>Yunuo Chen<sup>5</sup></span><span>Baining Guo<sup>2</sup></span><span><a href="mailto:zhazj@mail.ustc.edu.cn">Zheng-Jun Zha</a><sup>1†</sup></span>
+      </div>
+      <div class="affiliations"><span><sup>1</sup> University of Science and Technology of China</span><span><sup>2</sup> Microsoft Research Asia</span><span><sup>3</sup> University of Sydney</span><span><sup>4</sup> Fudan University</span><span><sup>5</sup> Shanghai Jiao Tong University</span></div>
+      <p class="author-notes">* Work done during internship at MSRA. <span>† Corresponding author.</span></p>
+      <div class="hero-actions">
+        <a class="button button-primary" id="paper-link" data-paper-link aria-disabled="true" target="_blank" rel="noopener"><svg class="icon"><use href="#icon-paper"/></svg> Paper </a>
+        <a class="button button-secondary button-code" id="code-link" hidden target="_blank" rel="noopener"><svg class="icon icon-brand" aria-hidden="true"><use href="#icon-github"/></svg> Code </a>
+        <span class="button button-unavailable button-code" id="code-pending"><svg class="icon icon-brand" aria-hidden="true"><use href="#icon-github"/></svg> Code <span class="soon">Coming soon</span></span>
+        <a class="button button-secondary button-arxiv" id="arxiv-link" aria-disabled="true" target="_blank" rel="noopener"><svg class="icon icon-brand" aria-hidden="true"><use href="#icon-arxiv"/></svg> ArXiv </a>
+        <a class="button button-secondary button-results" href="#results"><svg class="icon" aria-hidden="true"><use href="#icon-chart"/></svg> Results</a>
+      </div>
+      <section class="hero-abstract" id="abstract" aria-labelledby="abstract-title">
+        <h2 id="abstract-title">Abstract</h2>
+        <p>Post-training is crucial for improving text-to-image models, yet existing pipelines typically rely on manually curated training data and fixed training distributions. We introduce APT (Agentic Post-Training), a fully automated framework that adaptively post-trains a base model according to its evolving capability profile. APT coordinates three agents to construct evaluation sets from user requirements, diagnose model-specific strengths and failure modes, and generate reinforcement learning data with an adaptive prompt distribution that emphasizes underperforming capabilities. By repeatedly evaluating, diagnosing, and updating the generator, APT lets the current model’s behavior shape its next training tasks, forming a feedback loop inspired by recursive self-improvement. For general-purpose settings without user-specified evaluation scenarios, we further develop an evaluation harness that enables broad and diverse evaluation set generation. Experiments across multiple base models, benchmarks, and generation architectures demonstrate that APT is model-agnostic, benchmark-agnostic, architecture-agnostic, and fully automated.</p>
+      </section>
+    </section>
+
+    <div class="showcase container" aria-label="Selected images generated by APT-post-trained models">
+      <a class="showcase-tile" href="#gallery" data-gallery-model="lens" data-gallery-id="dpg_diffusiondb20"><img src="assets/images/lens-dpg_diffusiondb20_on.jpg" alt="A tabby cat in a transparent space helmet with Saturn in the background, generated by Lens with APT." width="768" height="768" fetchpriority="high"><span>Imagination <svg class="icon"><use href="#icon-diagonal"/></svg></span></a>
+      <a class="showcase-tile" href="#gallery" data-gallery-model="longcat" data-gallery-id="text_158"><img src="assets/images/longcat-text_158_on.jpg" alt="A pastel business card for illustrator Sophie Wu, generated by LongCat-Image with APT." width="768" height="768"><span>Text rendering <svg class="icon"><use href="#icon-diagonal"/></svg></span></a>
+      <a class="showcase-tile" href="#gallery" data-gallery-model="flux" data-gallery-id="gen_003"><img src="assets/images/flux-gen_003_on.jpg" alt="A glowing star wearing a scarf and backpack on a cosmic adventure, generated by FLUX.1 with APT." width="768" height="768"><span>Prompt following <svg class="icon"><use href="#icon-diagonal"/></svg></span></a>
+      <a class="showcase-tile" href="#gallery" data-gallery-model="sd3" data-gallery-id="dpg_diffusiondb33"><img src="assets/images/sd3-dpg_diffusiondb33_on.jpg" alt="An illustrated neon city reflected in rain-soaked streets, generated by SD3.5-Medium with APT." width="768" height="768"><span>Style & detail <svg class="icon"><use href="#icon-diagonal"/></svg></span></a>
+      <a class="showcase-tile" href="#gallery" data-gallery-model="lens" data-gallery-id="dpg_midjourney16"><img src="assets/images/lens-dpg_midjourney16_on.jpg" alt="The Mona Lisa taking a selfie with a smartphone, generated by Lens with APT." width="768" height="768"><span>Composition <svg class="icon"><use href="#icon-diagonal"/></svg></span></a>
+    </div>
+    <p class="showcase-caption container"><span class="tiny-dot"></span> Generated by different base models, post-trained with the same APT workflow. <a href="#gallery">See comparisons <span aria-hidden="true">↗</span></a></p>
+
+    <section class="section container" id="overview" aria-labelledby="overview-title">
+      <div class="intro-grid">
+        <div><p class="eyebrow section-label">01 / The idea</p><h2 id="overview-title">Better models.<br><em>Smarter training data.</em></h2></div>
+        <div class="intro-copy"><p>Different image models struggle with different things. A fixed training set cannot keep up with every model’s evolving strengths and weaknesses.</p><p><strong>APT makes post-training adaptive.</strong> Three agents work together to evaluate the current model, diagnose its failure modes, and generate the training prompts it needs next. After each update, the loop starts again.</p></div>
+      </div>
+      <div class="principles">
+        <article><span class="principle-number">01</span><h3>Model-agnostic</h3><p>One agentic workflow across different base models.</p></article>
+        <article><span class="principle-number">02</span><h3>Benchmark-agnostic</h3><p>One post-trained model, evaluated on multiple benchmarks.</p></article>
+        <article><span class="principle-number">03</span><h3>Architecture-agnostic</h3><p>Works with diffusion and autoregressive generators.</p></article>
+        <article><span class="principle-number">04</span><h3>Fully automated</h3><p>Model feedback drives the next round of training data.</p></article>
+      </div>
+    </section>
+
+    <section class="method-section" id="method" aria-labelledby="method-title">
+      <div class="container section">
+        <div class="section-heading"><div><p class="eyebrow section-label">02 / The method</p><h2 id="method-title">Evaluate. Diagnose. Train.<br><em>Then, do it again.</em></h2></div></div>
+        <figure class="framework-figure" id="framework">
+          <figcaption><div><h3>APT framework</h3></div></figcaption>
+          <button class="framework-image" data-lightbox="assets/figures/framework.jpg" data-lightbox-title="APT framework — Figure 1 in the paper" aria-label="Enlarge the full APT framework">
+            <img src="assets/figures/framework.jpg" alt="APT framework: an Evaluation Set Generation Agent constructs a fixed prompt–rubric evaluation set. The Diagnosis Agent evaluates the current generator, the RL Data Generation Agent adapts the training distribution, and RL updates the model before the next diagnostic round." width="2400" height="1184" loading="lazy" decoding="async">
+          </button>
+          <p class="framework-caption">
+            <strong>APT (Agentic Post-Training)</strong> turns post-training into a fully automated, evaluation-driven adaptive loop.
+            Given a user-specified evaluation scope, the <strong class="caption-evaluation-agent">Evaluation Set Generation Agent</strong> constructs a diverse evaluation set consisting of <em>prompt–evaluation rubric pairs</em>; the <strong class="caption-diagnosis-agent">Diagnosis Agent</strong> evaluates the current model on these pairs to identify its strengths and failure modes; and the <strong class="caption-rl-data-agent">RL Data Generation Agent</strong> adaptively samples next-round training prompts, prioritizing underperforming capabilities.
+            The updated model is then re-evaluated in the next round, allowing the training distribution to continuously adapt to the model's evolving capability profile.
+            This design eliminates the need for manually curated post-training data and makes APT <em>model-agnostic</em>, <em>benchmark-agnostic</em>, <em>architecture-agnostic</em>, and <em>fully automated</em>.
+          </p>
+        </figure>
+        <div class="pipeline" aria-label="APT workflow">
+          <div class="pipeline-setup"><span class="pipeline-kicker">Constructed once</span><div class="pipeline-node"><span class="node-icon sage"><svg class="icon"><use href="#icon-grid"/></svg></span><strong>Evaluation set</strong><span>Scope → prompts + rubrics</span></div></div>
+          <span class="pipeline-arrow" aria-hidden="true">→</span>
+          <div class="pipeline-loop"><span class="pipeline-kicker">The adaptive post-training loop</span><div class="loop-nodes"><div class="pipeline-node"><span class="node-icon diagnosis">01</span><strong>Diagnose</strong><span>Current model’s feedback</span></div><span class="pipeline-arrow" aria-hidden="true">→</span><div class="pipeline-node"><span class="node-icon curriculum">02</span><strong>Generate data</strong><span>Adaptive training prompts</span></div><span class="pipeline-arrow" aria-hidden="true">→</span><div class="pipeline-node"><span class="node-icon ink"><svg class="icon"><use href="#icon-loop"/></svg></span><strong>RL update</strong><span>Improve the generator</span></div></div><div class="feedback-line"><span>←</span><span>Re-evaluate the updated model</span><span>←</span></div></div>
+        </div>
+        <div class="agent-explorer">
+          <div class="agent-tabs" role="tablist" aria-label="Explore the three APT agents">
+            <button class="agent-tab is-active" id="agent-tab-0" role="tab" aria-selected="true" aria-controls="agent-panel" data-agent="0"><span class="agent-index">01</span><span>Evaluation Set<br><strong>Generation Agent</strong></span><svg class="icon"><use href="#icon-diagonal"/></svg></button>
+            <button class="agent-tab" id="agent-tab-1" role="tab" aria-selected="false" aria-controls="agent-panel" tabindex="-1" data-agent="1"><span class="agent-index">02</span><span>Model<br><strong>Diagnosis Agent</strong></span><svg class="icon"><use href="#icon-diagonal"/></svg></button>
+            <button class="agent-tab" id="agent-tab-2" role="tab" aria-selected="false" aria-controls="agent-panel" tabindex="-1" data-agent="2"><span class="agent-index">03</span><span>RL Data<br><strong>Generation Agent</strong></span><svg class="icon"><use href="#icon-diagonal"/></svg></button>
+          </div>
+          <div class="agent-panel" id="agent-panel" role="tabpanel" aria-labelledby="agent-tab-0" tabindex="0">
+            <div class="agent-description"><span class="eyebrow" id="agent-kicker">A broad foundation</span><h3 id="agent-title">Define what good generation looks like.</h3><p id="agent-description">Starting from a user-specified scope—or a general-purpose evaluation harness—the agent builds a diverse taxonomy of scenarios, then generates prompts and task-specific evaluation rubrics. This evaluation set stays fixed throughout post-training.</p><p class="agent-output" id="agent-output">Output: a fixed evaluation set of prompt–rubric pairs.</p></div>
+            <details class="agent-examples" id="agent-examples" hidden>
+              <summary aria-controls="agent-examples-content"><span>Examples <span class="agent-examples-count" id="agent-examples-count"></span></span><span class="details-plus" aria-hidden="true">+</span></summary>
+              <div class="agent-examples-content" id="agent-examples-content"></div>
+            </details>
+            <div class="agent-visual" id="agent-visual"><div class="agent-stat">2,609<span>prompt–rubric pairs</span></div><div class="taxonomy"><span>Human</span><span>Object</span><span>Animal</span><span>Plant</span><span>Scene</span><span>Food</span><span>Event</span><span>Fictional World</span><span>Text</span><span>UI & Graphic Design</span></div><span class="visual-note">10 scenario categories · Up to 10 prompt-specific rubrics</span></div>
+          </div>
+        </div>
+        <div class="method-bottom"><p><strong>120</strong> diagnostic prompts <span>→</span> <strong>480</strong> training prompts <span>→</span> <strong>20</strong> RL steps per round</p></div>
+        <figure class="framework-figure evaluation-figure" id="evaluation-harness">
+          <figcaption><div><span class="eyebrow">Figure 2</span><h3>The evaluation harness</h3></div></figcaption>
+          <img src="assets/figures/evaluation.jpg?v=crop" alt="Evaluation harness: statistics of the automatically generated evaluation set, alongside an example prompt and its task-specific evaluation rubrics." width="2400" height="944" loading="lazy" decoding="async">
+          <p class="framework-caption">
+            <em>Left</em>: Statistics of the sub-categories within each category and the prompt-rubrics pairs within each category.
+            All prompt-rubrics pairs are automatically generated by our Evaluation Set Generation Agent, providing comprehensive coverage for evaluating the current T2I model.
+            <em>Right</em>: An example prompt-rubrics pair.
+          </p>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section container results-section" id="results" aria-labelledby="results-title">
+      <div class="section-heading"><div><p class="eyebrow section-label">03 / The evidence</p><h2 id="results-title">One workflow.<br><em>Consistent gains.</em></h2></div><p>APT achieves the best average performance across all four diffusion models, outperforming post-training on a carefully handcrafted RL set.</p></div>
+      <div class="results-controls"><div class="legend" aria-label="Chart legend"><span><i class="legend-dot base"></i> Base model</span><span><i class="legend-dot handcrafted"></i> Handcrafted RL</span><span><i class="legend-dot apt"></i> APT <span class="ours-label">Ours</span></span></div><label class="metric-select">Metric <select id="metric-select"><option value="average">Normalized average</option><option value="geneval">GenEval</option><option value="oneig">OneIG-EN</option><option value="geneval2">GenEval2</option><option value="dpg">DPG</option><option value="cvtg">CVTG-2K</option></select></label></div>
+      <div class="results-card"><div class="chart-header"><span id="chart-description">Average over five benchmarks · Higher is better ↑</span></div><div id="benchmark-chart" class="benchmark-chart" aria-label="Benchmark scores"></div><div class="chart-axis" id="chart-axis" aria-hidden="true"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div></div>
+      <p class="chart-note" id="chart-note">For the normalized average, GenEval, OneIG-EN, and CVTG-2K are rescaled to 0–100, then averaged with GenEval2 and DPG. No benchmark prompts are used to construct the main APT training data.</p>
+      <div class="result-callouts"><div><strong>+14.20<span>points</span></strong><p>Lens average over its base model</p></div><div><strong>+10.70<span>points</span></strong><p>FLUX.1 [dev] average over its base model</p></div><div><strong>4 out of 4</strong><p>Diffusion models with the best average using APT</p></div></div>
+      <details class="results-details scores-disclosure">
+        <summary><span class="scores-disclosure-label"><strong>See all reported scores</strong></span><span class="details-plus" aria-hidden="true">+</span></summary>
+        <div class="table-scroll" role="region" aria-label="Full benchmark results" tabindex="0"><table class="data-table"><caption>Main results in the original benchmark units. Bold averages indicate the best setting for each model.</caption><thead><tr><th scope="col">Model</th><th scope="col">Setting</th><th scope="col">GenEval</th><th scope="col">OneIG-EN</th><th scope="col">GenEval2</th><th scope="col">DPG</th><th scope="col">CVTG-2K</th><th scope="col">Average</th></tr></thead><tbody id="results-table-body"></tbody></table></div>
+      </details>
+      <div class="ar-results"><div><span class="eyebrow">Beyond diffusion</span><h3>The same idea.<br>A different architecture.</h3><p>APT also improves the autoregressive <strong>Janus-Pro</strong> model with GRPO, outperforming the base and handcrafted RL settings on the three reported overall metrics.</p></div><div class="table-scroll" role="region" aria-label="Autoregressive model results" tabindex="0"><table class="ar-table"><caption>Janus-Pro  ·   Higher is better ↑</caption><thead><tr><th scope="col">Metric</th><th scope="col">Base</th><th scope="col">Handcrafted RL</th><th scope="col">APT</th></tr></thead><tbody><tr><th scope="row">GenEval</th><td>0.781</td><td>0.806</td><td><strong>0.815</strong></td></tr><tr><th scope="row">OneIG-EN</th><td>0.314</td><td>0.316</td><td><strong>0.318</strong></td></tr><tr><th scope="row">GenEval2</th><td>15.25</td><td>20.42</td><td><strong>21.61</strong></td></tr></tbody></table></div></div>
+    </section>
+
+    <section class="section container" id="analysis" aria-labelledby="analysis-title">
+      <div class="section-heading"><div><p class="eyebrow section-label">04 / Why adaptation matters</p><h2 id="analysis-title">The right data is<br><em>model-specific.</em></h2></div><p>Post-train each target with its own adaptively generated data or with data generated for another model. Target-adaptive data gives the best three-benchmark average in every row.</p></div>
+      <div class="analysis-grid"><div class="transfer-card"><div class="transfer-title"><h3>Whose training data works best?</h3><span>Higher is better ↑</span></div><p class="transfer-axis-label">Source model for APT-generated RL data →</p><div class="table-scroll" role="region" aria-label="Cross-model training data transfer" tabindex="0"><table class="transfer-table"><caption class="sr-only">Target models are rows, source models are columns. Average over GenEval, OneIG-EN, and GenEval2 after 200 optimization steps.</caption><thead><tr><th scope="col">Target ↓</th><th scope="col">Lens</th><th scope="col">SD3.5</th><th scope="col">FLUX</th><th scope="col">LongCat</th></tr></thead><tbody><tr><th scope="row">Lens</th><td class="diagonal">61.40</td><td>60.03</td><td>60.88</td><td>58.93</td></tr><tr><th scope="row">SD3.5</th><td>45.87</td><td class="diagonal">47.43</td><td>46.15</td><td>44.78</td></tr><tr><th scope="row">FLUX</th><td>47.19</td><td>48.53</td><td class="diagonal">50.67</td><td>48.97</td></tr><tr><th scope="row">LongCat</th><td>56.04</td><td>55.19</td><td>56.13</td><td class="diagonal">57.07</td></tr></tbody></table></div><p class="transfer-note"><span class="diagonal-key"></span> Adapted to the target model · Best average in every row</p><p class="fine-print">Normalized average over three benchmarks: GenEval, OneIG-EN, and GenEval2. All models use 200 optimization steps in this study.</p></div>
+        <div class="transfer-findings">
+          <article><span class="finding-number">01</span><div><h3>The diagonal wins in all four rows.</h3><p>Lens, SD3.5-Medium, FLUX, and LongCat all achieve their <strong>highest average</strong> when the training data is generated adaptively for the same target model.</p></div></article>
+          <article><span class="finding-number">02</span><div><h3>Transfer leaves a measurable gap.</h3><p>Target-adaptive training gains <strong>0.52–1.70 normalized-average points</strong> over the best transferred source. For FLUX, the score rises from <strong>48.97 to 50.67</strong>.</p></div></article>
+          <article><span class="finding-number">03</span><div><h3>The curriculum is model-specific.</h3><p>Data suited to one generator’s failure modes is suboptimal for another. These results support diagnosing and generating RL data <strong>for the model being updated</strong>.</p></div></article>
+        </div>
+      </div>
+      <details class="transfer-details scores-disclosure">
+        <summary><span class="scores-disclosure-label"><strong>Per-benchmark transfer results</strong></span><span class="details-plus" aria-hidden="true">+</span></summary>
+        <p>Columns identify the source of the training data; rows identify the target model. Shading marks target-adaptive training, and bold marks the best score in each row. Each target model is trained for 200 optimization steps.</p>
+        <div class="transfer-matrices">
+          <article><h3>(a) GenEval</h3><div class="table-scroll" role="region" aria-label="(a) GenEval cross-model transfer results" tabindex="0"><table class="transfer-table transfer-subtable" id="transfer-geneval"><caption class="sr-only">Target models are rows and source models are columns.</caption><thead><tr><th scope="col">Target ↓</th><th scope="col">Lens</th><th scope="col">SD3.5</th><th scope="col">FLUX</th><th scope="col">LongCat</th></tr></thead><tbody><tr><th scope="row">Lens</th><td class="diagonal"><strong>0.851</strong></td><td>0.833</td><td>0.846</td><td>0.798</td></tr><tr><th scope="row">SD3.5</th><td>0.736</td><td class="diagonal"><strong>0.743</strong></td><td>0.742</td><td>0.722</td></tr><tr><th scope="row">FLUX</th><td>0.679</td><td>0.726</td><td class="diagonal"><strong>0.751</strong></td><td>0.729</td></tr><tr><th scope="row">LongCat</th><td>0.823</td><td>0.786</td><td>0.827</td><td class="diagonal"><strong>0.828</strong></td></tr></tbody></table></div></article>
+          <article><h3>(b) OneIG-EN</h3><div class="table-scroll" role="region" aria-label="(b) OneIG-EN cross-model transfer results" tabindex="0"><table class="transfer-table transfer-subtable" id="transfer-oneig"><caption class="sr-only">Target models are rows and source models are columns.</caption><thead><tr><th scope="col">Target ↓</th><th scope="col">Lens</th><th scope="col">SD3.5</th><th scope="col">FLUX</th><th scope="col">LongCat</th></tr></thead><tbody><tr><th scope="row">Lens</th><td class="diagonal"><strong>0.523</strong></td><td>0.522</td><td>0.517</td><td>0.520</td></tr><tr><th scope="row">SD3.5</th><td>0.404</td><td class="diagonal">0.404</td><td><strong>0.405</strong></td><td>0.395</td></tr><tr><th scope="row">FLUX</th><td>0.436</td><td>0.443</td><td class="diagonal"><strong>0.459</strong></td><td>0.440</td></tr><tr><th scope="row">LongCat</th><td><strong>0.509</strong></td><td>0.496</td><td>0.508</td><td class="diagonal">0.506</td></tr></tbody></table></div></article>
+          <article><h3>(c) GenEval2</h3><div class="table-scroll" role="region" aria-label="(c) GenEval2 cross-model transfer results" tabindex="0"><table class="transfer-table transfer-subtable" id="transfer-geneval2"><caption class="sr-only">Target models are rows and source models are columns.</caption><thead><tr><th scope="col">Target ↓</th><th scope="col">Lens</th><th scope="col">SD3.5</th><th scope="col">FLUX</th><th scope="col">LongCat</th></tr></thead><tbody><tr><th scope="row">Lens</th><td class="diagonal"><strong>46.80</strong></td><td>44.59</td><td>46.35</td><td>44.98</td></tr><tr><th scope="row">SD3.5</th><td>23.61</td><td class="diagonal"><strong>27.58</strong></td><td>23.74</td><td>22.65</td></tr><tr><th scope="row">FLUX</th><td>30.06</td><td>28.69</td><td class="diagonal"><strong>31.01</strong></td><td>30.02</td></tr><tr><th scope="row">LongCat</th><td>34.91</td><td>37.37</td><td>34.90</td><td class="diagonal"><strong>37.80</strong></td></tr></tbody></table></div></article>
+        </div>
+      </details>
+    </section>
+
+    <section class="ablation-section" id="ablations" aria-labelledby="ablations-title">
+      <div class="container section">
+        <div class="section-heading"><div><p class="eyebrow section-label">05 / Ablation studies</p><h2 id="ablations-title">Inside the adaptive loop.<br><em>What drives the gains?</em></h2></div></div>
+        <nav class="study-links" aria-label="Ablation experiments"><a href="#evaluation-ablation"><span>01</span> Evaluation set</a><a href="#feedback-ablation"><span>02</span> Feedback &amp; data generation</a><a href="#backbone-ablation"><span>03</span> LLM backbones</a></nav>
+
+        <article class="ablation-study" id="evaluation-ablation" aria-labelledby="evaluation-ablation-title">
+          <div class="study-heading"><div><p class="eyebrow">01 / Evaluation coverage</p><h3 id="evaluation-ablation-title">Evaluation Set Generation Agent</h3></div></div>
+          <p class="study-description">Replace the APT-generated evaluation set with OneIG-EN or GenEval when diagnosing the model, while keeping the remaining pipeline unchanged. The APT evaluation set achieves the best five-benchmark average for both base models.</p>
+          <p class="table-scroll-hint">Scroll horizontally for all benchmark scores <span aria-hidden="true">↔</span></p>
+          <div class="table-scroll ablation-scroll" role="region" aria-label="Ablation of the evaluation set generation agent" tabindex="0">
+            <table class="ablation-table" id="evaluation-ablation-table">
+              <caption class="sr-only">Ablation of the evaluation set generation agent. Scores use the original benchmark units. Bold indicates the column best within each base-model block.</caption>
+              <colgroup><col class="setting-column"><col span="5"><col class="average-column"></colgroup>
+              <thead><tr><th scope="col">Evaluation setting</th><th scope="col">GenEval<span>Overall</span></th><th scope="col">OneIG-EN<span>Average</span></th><th scope="col">GenEval2<span>Soft-TIFA<sub>GM</sub></span></th><th scope="col">DPG<span>Overall</span></th><th scope="col">CVTG-2K<span>Word accuracy</span></th><th scope="col">Average<span>Normalized</span></th></tr></thead>
+              <tbody data-base-model="Lens">
+                <tr class="study-model"><th colspan="7" scope="rowgroup">Lens</th></tr>
+                <tr><th scope="row">Base Model</th><td>0.702</td><td>0.521</td><td>29.06</td><td>85.93</td><td>0.480</td><td>57.06</td></tr>
+                <tr><th scope="row">OneIG-EN Evaluation Set</th><td>0.847</td><td><strong>0.528</strong></td><td>47.08</td><td>87.39</td><td><strong>0.823</strong></td><td>70.85</td></tr>
+                <tr><th scope="row">GenEval Evaluation Set</th><td><strong>0.887</strong></td><td>0.505</td><td>41.43</td><td>84.23</td><td>0.674</td><td>66.45</td></tr>
+                <tr class="apt-row"><th scope="row">APT Evaluation Set</th><td>0.859</td><td>0.523</td><td><strong>50.73</strong></td><td><strong>87.88</strong></td><td>0.795</td><td><strong>71.26</strong></td></tr>
+              </tbody>
+              <tbody data-base-model="SD3.5-Medium">
+                <tr class="study-model"><th colspan="7" scope="rowgroup">SD3.5-Medium</th></tr>
+                <tr><th scope="row">Base Model</th><td>0.684</td><td>0.408</td><td>17.63</td><td>83.67</td><td>0.312</td><td>48.34</td></tr>
+                <tr><th scope="row">OneIG-EN Evaluation Set</th><td><strong>0.800</strong></td><td><strong>0.431</strong></td><td>26.38</td><td><strong>86.69</strong></td><td>0.497</td><td>57.17</td></tr>
+                <tr><th scope="row">GenEval Evaluation Set</th><td>0.692</td><td>0.390</td><td>17.35</td><td>79.02</td><td>0.458</td><td>50.07</td></tr>
+                <tr class="apt-row"><th scope="row">APT Evaluation Set</th><td>0.763</td><td>0.404</td><td><strong>29.50</strong></td><td>86.50</td><td><strong>0.569</strong></td><td><strong>57.92</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="study-footer"><p>APT offers the best overall average, while benchmark-specific evaluation sets can lead on individual metrics.</p></div>
+        </article>
+
+        <article class="ablation-study" id="feedback-ablation" aria-labelledby="feedback-ablation-title">
+          <div class="study-heading"><div><p class="eyebrow">02 / Feedback &amp; curriculum</p><h3 id="feedback-ablation-title">Iterative Feedback Loop &amp; RL Data Generation Agent</h3></div></div>
+          <p class="study-description">On Lens, remove repeated diagnosis, reduce the diagnostic criteria, or train only on difficult capabilities. The full APT setting combines refreshed feedback with comprehensive diagnosis and balanced prompt sampling.</p>
+          <p class="table-scroll-hint">Scroll horizontally for all benchmark scores <span aria-hidden="true">↔</span></p>
+          <div class="table-scroll ablation-scroll" role="region" aria-label="Ablation on the Iterative Feedback Loop and the RL Data Generation Agent" tabindex="0">
+            <table class="ablation-table" id="feedback-ablation-table">
+              <caption class="sr-only">Ablation on the Iterative Feedback Loop and the RL Data Generation Agent. Scores use the original benchmark units. Bold indicates the column best within each base-model block.</caption>
+              <colgroup><col class="setting-column"><col span="5"><col class="average-column"></colgroup>
+              <thead><tr><th scope="col">Post-training setting</th><th scope="col">GenEval<span>Overall</span></th><th scope="col">OneIG-EN<span>Average</span></th><th scope="col">GenEval2<span>Soft-TIFA<sub>GM</sub></span></th><th scope="col">DPG<span>Overall</span></th><th scope="col">CVTG-2K<span>Word accuracy</span></th><th scope="col">Average<span>Normalized</span></th></tr></thead>
+              <tbody data-base-model="Lens">
+                <tr class="study-model"><th colspan="7" scope="rowgroup">Lens</th></tr>
+                <tr class="apt-row"><th scope="row">APT<span class="setting-description">Full framework</span></th><td><strong>0.859</strong></td><td>0.523</td><td><strong>50.73</strong></td><td><strong>87.88</strong></td><td><strong>0.795</strong></td><td><strong>71.26</strong></td></tr>
+                <tr><th scope="row">w/o Iterative Feedback Loop<span class="setting-description">Iterative feedback ablation</span></th><td>0.844</td><td>0.523</td><td>48.27</td><td>87.61</td><td>0.791</td><td>70.34</td></tr>
+                <tr><th scope="row">Reduced Diagnostic Criteria<span class="setting-description">RL data generation ablation</span></th><td>0.800</td><td>0.520</td><td>49.58</td><td>87.53</td><td>0.763</td><td>69.08</td></tr>
+                <tr><th scope="row">Hard-Only Sampling<span class="setting-description">RL data generation ablation</span></th><td>0.853</td><td><strong>0.530</strong></td><td>47.91</td><td>87.58</td><td>0.794</td><td>70.64</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="ablation-deltas" aria-label="Loss in five-benchmark average relative to full APT"><div><strong>−0.92<span>points</span></strong><p>Without iterative feedback</p></div><div><strong>−2.18<span>points</span></strong><p>Reduced diagnostic criteria</p></div><div><strong>−0.62<span>points</span></strong><p>Hard-only sampling</p></div></div>
+        </article>
+
+        <article class="ablation-study" id="backbone-ablation" aria-labelledby="backbone-ablation-title">
+          <div class="study-heading"><div><p class="eyebrow">03 / Agent backbone robustness</p><h3 id="backbone-ablation-title">Different LLMs, effective post-training</h3></div></div>
+          <p class="study-description">Use Lens as the image generator and change only the LLM in the RL Data Generation Agent. All eight tested backbones improve the five-benchmark average over the base model; GPT-5.4 is the default backbone.</p>
+          <p class="table-scroll-hint">Scroll horizontally for all benchmark scores <span aria-hidden="true">↔</span></p>
+          <div class="table-scroll ablation-scroll" role="region" aria-label="Ablation on the LLM backbone used in the RL Data Generation Agent" tabindex="0">
+            <table class="ablation-table" id="backbone-ablation-table">
+              <caption class="sr-only">Ablation on the LLM backbone used in the RL Data Generation Agent. Scores use the original benchmark units.</caption>
+              <colgroup><col class="setting-column"><col span="5"><col class="average-column"></colgroup>
+              <thead><tr><th scope="col">Data-generation LLM</th><th scope="col">GenEval<span>Overall</span></th><th scope="col">OneIG-EN<span>Average</span></th><th scope="col">GenEval2<span>Soft-TIFA<sub>GM</sub></span></th><th scope="col">DPG<span>Overall</span></th><th scope="col">CVTG-2K<span>Word accuracy</span></th><th scope="col">Average<span>Normalized</span></th></tr></thead>
+              <tbody data-base-model="Lens">
+                <tr class="study-model"><th colspan="7" scope="rowgroup">Lens</th></tr>
+                <tr><th scope="row">Base Model<span class="setting-description">Before post-training</span></th><td>0.702</td><td>0.521</td><td>29.06</td><td>85.93</td><td>0.480</td><td>57.06</td></tr>
+                <tr class="apt-row"><th scope="row">GPT-5.4<span class="setting-description">Default data-generation backbone</span></th><td>0.859</td><td>0.523</td><td>50.73</td><td>87.88</td><td>0.795</td><td>71.26</td></tr>
+                <tr><th scope="row">GPT-5.6-Sol</th><td>0.832</td><td>0.519</td><td>51.43</td><td>88.12</td><td>0.791</td><td>70.75</td></tr>
+                <tr><th scope="row">GPT-4.1</th><td>0.851</td><td>0.520</td><td>48.94</td><td>87.93</td><td>0.796</td><td>70.71</td></tr>
+                <tr><th scope="row">GPT-5.4-mini</th><td>0.825</td><td>0.518</td><td>50.79</td><td>87.69</td><td>0.810</td><td>70.76</td></tr>
+                <tr><th scope="row">Qwen3.5-9B</th><td>0.861</td><td>0.520</td><td>47.03</td><td>88.36</td><td>0.793</td><td>70.56</td></tr>
+                <tr><th scope="row">Qwen3.5-122B-A10B</th><td>0.893</td><td>0.525</td><td>51.42</td><td>87.65</td><td>0.805</td><td>72.27</td></tr>
+                <tr><th scope="row">Gemini-3.8-Flash</th><td>0.829</td><td>0.525</td><td>48.67</td><td>87.70</td><td>0.781</td><td>69.97</td></tr>
+                <tr><th scope="row">Grok-4.6</th><td>0.819</td><td>0.501</td><td>51.44</td><td>87.50</td><td>0.732</td><td>68.83</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="gallery-section" id="gallery" aria-labelledby="gallery-title">
+      <div class="container section">
+        <div class="section-heading"><div><p class="eyebrow section-label">06 / See the difference</p><h2 id="gallery-title">The same prompt.<br><em>A more capable model.</em></h2></div></div>
+        <div class="gallery-toolbar"><div class="model-tabs" role="tablist" aria-label="Image generation model"><button id="gallery-tab-lens" class="is-active" role="tab" aria-selected="true" aria-controls="gallery-panel" data-model="lens">Lens</button><button id="gallery-tab-sd3" role="tab" aria-selected="false" aria-controls="gallery-panel" tabindex="-1" data-model="sd3">SD3.5-Medium</button><button id="gallery-tab-flux" role="tab" aria-selected="false" aria-controls="gallery-panel" tabindex="-1" data-model="flux">FLUX.1 [dev]</button><button id="gallery-tab-longcat" role="tab" aria-selected="false" aria-controls="gallery-panel" tabindex="-1" data-model="longcat">LongCat-Image</button></div><div class="gallery-pagination"><button class="icon-button" id="previous-example" aria-label="Previous example"><svg class="icon flip"><use href="#icon-arrow"/></svg></button><span id="example-counter" aria-live="polite">01 / 08</span><button class="icon-button" id="next-example" aria-label="Next example"><svg class="icon"><use href="#icon-arrow"/></svg></button></div></div>
+        <div id="gallery-panel" role="tabpanel" aria-labelledby="gallery-tab-lens">
+          <div class="example-picker" id="example-picker" role="group" aria-label="Choose an example"></div>
+          <div class="comparison-grid" id="comparison-grid">
+            <figure><figcaption><span class="comparison-dot base"></span> Base model <span class="setting-note">Original</span></figcaption><button class="image-button" id="compare-base" data-lightbox="assets/images/lens-dpg_midjourney16_base.jpg" data-lightbox-title="Lens · Base model"><img id="image-base" src="assets/images/lens-dpg_midjourney16_base.jpg" alt="Mona Lisa selfie example generated by the Lens base model." width="768" height="768" loading="lazy"><span class="image-expand"><svg class="icon"><use href="#icon-expand"/></svg></span></button></figure>
+            <figure><figcaption><span class="comparison-dot handcrafted"></span> Handcrafted RL <span class="setting-note">Baseline</span></figcaption><button class="image-button" id="compare-off" data-lightbox="assets/images/lens-dpg_midjourney16_off.jpg" data-lightbox-title="Lens · Handcrafted RL"><img id="image-off" src="assets/images/lens-dpg_midjourney16_off.jpg" alt="Mona Lisa selfie example generated by Lens with a handcrafted RL training set." width="768" height="768" loading="lazy"><span class="image-expand"><svg class="icon"><use href="#icon-expand"/></svg></span></button></figure>
+            <figure class="apt-comparison"><figcaption><span class="comparison-dot apt"></span> With APT <span class="ours-label">Ours</span></figcaption><button class="image-button" id="compare-on" data-lightbox="assets/images/lens-dpg_midjourney16_on.jpg" data-lightbox-title="Lens · APT"><img id="image-on" src="assets/images/lens-dpg_midjourney16_on.jpg" alt="Mona Lisa selfie example generated by Lens with APT." width="768" height="768" loading="lazy"><span class="image-expand"><svg class="icon"><use href="#icon-expand"/></svg></span></button></figure>
+          </div>
+          <div class="prompt-card"><span class="eyebrow">The prompt</span><p id="gallery-prompt">A digitally rendered image of the iconic Monalisa capturing a selfie, boasting 8K resolution and hyper-realistic details that highlight the delicate textures of her skin and the intricate fibers of her clothing. The scene is illuminated with cinematic lighting that casts soft shadows and enhances the depth of field, giving a three-dimensional quality to the image. The background is blurred artfully, drawing full attention to her enigmatic expression and the modern device in her hands, all created with the precision of an Octane render engine.</p><div class="prompt-meta"><span id="gallery-category">Creative composition</span><span id="gallery-source">Paper · Figure 3</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="citation-section" id="citation" aria-labelledby="citation-title"><div class="container section citation-grid"><div><p class="eyebrow section-label">07 / Build on this work</p><h2 id="citation-title">A step toward<br><em>self-improving models.</em></h2><p>If you find APT useful in your research,<br>please consider citing our work.</p><a class="text-link" data-paper-link hidden target="_blank" rel="noopener">Read the full paper <svg class="icon"><use href="#icon-diagonal"/></svg></a></div><div class="citation-card"><div class="citation-header"><span>BibTeX · arXiv</span><button id="copy-citation" class="copy-button"><svg class="icon"><use href="#icon-copy"/></svg><span>Copy citation</span></button></div><pre><code id="bibtex">@misc{zhang2026aptfeedbackdrivenagenticposttraining,
+  title = {APT: Feedback-Driven Agentic Post-Training
+           for Text-to-Image Generation},
+  author = {Sirui Zhang and Fangyun Wei and Dong Chen
+            and Jinjing Zhao and Yitong Wang
+            and Yunuo Chen and Baining Guo
+            and Zheng-Jun Zha},
+  year = {2026},
+  eprint = {2610.18097},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CV},
+  url = {https://arxiv.org/abs/2610.18097}
+}</code></pre></div></div></section>
+  </main>
+
+  <footer class="site-footer container"><a class="brand" href="#" aria-label="Back to top"><span class="brand-wordmark">APT</span></a><a href="#">Back to top <span aria-hidden="true">↑</span></a></footer>
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-title"><div class="lightbox-header"><h2 id="lightbox-title">Image detail</h2><button class="icon-button" id="close-lightbox" aria-label="Close image"><svg class="icon"><use href="#icon-close"/></svg></button></div><img id="lightbox-image" alt=""><p>Press <kbd>Esc</kbd> or click outside the image to close.</p></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript-note">Enable JavaScript for interactive charts and the complete image gallery. The method, paper download, and selected comparisons are available above.</p></noscript>
+</body>
+</html>
